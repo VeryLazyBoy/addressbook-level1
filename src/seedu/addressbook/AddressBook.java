@@ -329,7 +329,8 @@ public class AddressBook {
      */
     private static boolean hasValidParentDirectory(Path filePath) {
         Path parentDirectory = filePath.getParent();
-        return parentDirectory == null || Files.isDirectory(parentDirectory);
+        boolean isParentDirectoryNull = parentDirectory == null;
+        return isParentDirectoryNull || Files.isDirectory(parentDirectory);
     }
 
     /**
