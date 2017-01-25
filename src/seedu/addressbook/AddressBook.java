@@ -208,8 +208,40 @@ public class AddressBook {
 
     public static void main(String[] args) {
         showWelcomeMessage();
-        processProgramArgs(args);
-        loadDataFromStorage();
+        
+        /*
+		 * Processes the program main method run arguments. If a valid storage
+		 * file is specified, sets up that file for storage. Otherwise sets up
+		 * the default file for storage.
+		 */
+		if (args.length >= 2) {
+			showToUser(MESSAGE_INVALID_PROGRAM_ARGS);
+			exitProgram();
+		}
+
+		if (args.length == 1) {
+			setupGivenFileForStorage(args[0]);
+		}
+
+		if (args.length == 0) {
+			setupDefaultFileForStorage();
+		}
+
+		/*
+		 * Converts contents of a file into a list of persons. Shows error messages
+		 * and exits program if any errors in reading or decoding was encountered.
+		 */
+		ArrayList<String[]> persons = new ArrayList<String[]>();
+		final Optional<ArrayList<String[]>> successfullyDecoded = decodePersonsFromStrings(getLinesInFile(storageFilePath));
+		if (!successfullyDecoded.isPresent()) {
+			showToUser(MESSAGE_INVALID_STORAGE_FILE_CONTENT);
+			exitProgram();
+		} else {
+			persons = successfullyDecoded.get();
+		}
+
+		ALL_PERSONS.clear();
+		ALL_PERSONS.addAll(persons);
         while (true) {
             String userCommand = getUserInput();
             echoUserCommand(userCommand);
