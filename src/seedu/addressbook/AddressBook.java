@@ -208,7 +208,25 @@ public class AddressBook {
 
     public static void main(String[] args) {
         showWelcomeMessage();
-        processProgramArgs(args);
+        
+        /*
+        *Processes the program main method run arguments.
+        *If a valid storage file is specified, sets up that file for storage.
+        *Otherwise sets up the default file for storage.
+        */
+        if (args.length >= 2) {
+		    showToUser(MESSAGE_INVALID_PROGRAM_ARGS);
+		    exitProgram();
+		}
+		
+		if (args.length == 1) {
+		    setupGivenFileForStorage(args[0]);
+		}
+		
+		if(args.length == 0) {
+		    setupDefaultFileForStorage();
+		}
+		
         loadDataFromStorage();
         while (true) {
             String userCommand = getUserInput();
