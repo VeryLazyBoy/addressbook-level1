@@ -99,12 +99,14 @@ public class AddressBook {
 
     private static final String PERSON_STRING_REPRESENTATION = "%1$s " // name
                                                             + PERSON_DATA_PREFIX_PHONE + "%2$s " // phone
-                                                            + PERSON_DATA_PREFIX_EMAIL + "%3$s"; // email
+                                                            + PERSON_DATA_PREFIX_EMAIL + "%3$s" // email
+    														+ PERSON_DATA_PREFIX_BIRTHDAY + "%4$s"; //birthday
     private static final String COMMAND_ADD_WORD = "add";
     private static final String COMMAND_ADD_DESC = "Adds a person to the address book.";
     private static final String COMMAND_ADD_PARAMETERS = "NAME "
                                                       + PERSON_DATA_PREFIX_PHONE + "PHONE_NUMBER "
-                                                      + PERSON_DATA_PREFIX_EMAIL + "EMAIL";
+                                                      + PERSON_DATA_PREFIX_EMAIL + "EMAIL "
+                                                      + PERSON_DATA_PREFIX_BIRTHDAY + "BIRTHDAY";
     private static final String COMMAND_ADD_EXAMPLE = COMMAND_ADD_WORD + " John Doe p/98765432 e/johnd@gmail.com b/20170202";
 
     private static final String COMMAND_FIND_WORD = "find";
@@ -927,7 +929,7 @@ public class AddressBook {
      */
     private static String encodePersonToString(String[] person) {
         return String.format(PERSON_STRING_REPRESENTATION,
-                getNameFromPerson(person), getPhoneFromPerson(person), getEmailFromPerson(person));
+                getNameFromPerson(person), getPhoneFromPerson(person), getEmailFromPerson(person), getBirthdayFromPerson(person));
     }
 
     /**
