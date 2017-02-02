@@ -64,13 +64,13 @@ Format: `help`
 #### Adding a person: `add`
 > Adds a person to the address book
 
-Format: `add NAME p/PHONE_NUMBER e/EMAIL`  
+Format: `add NAME p/PHONE_NUMBER e/EMAIL b/BIRTHDAY`  
 > Words in `UPPER_CASE` are the parameters<br>
   Phone number and email can be in any order but the name must come first.
 
 Examples: 
-* `add John Doe p/98765432 e/johnd@gmail.com`
-* `add Betsy Crowe e/bencrowe@gmail.com p/1234567 `
+* `add John Doe p/98765432 e/johnd@gmail.com b/20170202`
+* `add Betsy Crowe e/bencrowe@gmail.com p/1234567 b/20170202`
 
 #### Listing all persons: `list`
 
