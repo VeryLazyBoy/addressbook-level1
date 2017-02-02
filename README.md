@@ -79,6 +79,13 @@ oldest first.
 
 Format: `list`  
 
+#### Sorting all persons and list them in alphabetical order: `list`
+
+> Shows a list of persons, as an indexed list, in the order they were added to the address book, 
+oldest first.
+
+Format: `sort` 
+
 #### Finding a person by keyword `find`
 > Finds persons that match given keywords
 
