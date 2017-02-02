@@ -79,10 +79,9 @@ oldest first.
 
 Format: `list`  
 
-#### Sorting all persons and list them in alphabetical order: `list`
+#### Sorting all persons and list them in alphabetical order
 
-> Shows a list of persons, as an indexed list, in the order they were added to the address book, 
-oldest first.
+> Shows a list of persons, as an indexed list, in alphabetical order.
 
 Format: `sort` 
 
