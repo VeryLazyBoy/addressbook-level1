@@ -139,6 +139,13 @@ public class AddressBook {
     private static final String COMMAND_SORT_WORD = "sort";
     private static final Object COMMAND_SORT_DESC = "List the persons in alphabetical order";
     private static final String COMMAND_SORT_EXAMPLE = COMMAND_SORT_WORD;
+    private static final String COMMAND_EDIT_WORD = "edit";
+    private static final String COMMAND_EDIT_DESC = "Edit one property of a specific person at one time.";
+    private static final String COMMAND_EDIT_EXAMPLE = COMMAND_EDIT_WORD + " 1 p/4008823823";
+    private static final String COMMAND_EDIT_PARAMETERS = "INDEX "
+            											+ PERSON_DATA_PREFIX_PHONE + "PHONE_NUMBER "
+            											+ PERSON_DATA_PREFIX_EMAIL + "EMAIL "
+    													+ PERSON_DATA_PREFIX_BIRTHDAY + "BIRTHDAY";
     
     private static final String DIVIDER = "===================================================";
 
@@ -191,8 +198,8 @@ public class AddressBook {
      */
     private static final ArrayList<String[]> ALL_PERSONS = new ArrayList<>();
 
-	
 
+	
 
     /**
      * Stores the most recent list of persons shown to the user as a result of a user command.
@@ -396,12 +403,83 @@ public class AddressBook {
             executeExitProgramRequest();
         case COMMAND_SORT_WORD:
         	return executeSortPerson();
+        case COMMAND_EDIT_WORD:
+        	return executeEditPerson(commandArgs);
         default:
             return getMessageForInvalidCommandInput(commandType, getUsageInfoForAllCommands());
         }
     }
 
-    private static String executeSortPerson() {
+    private static String executeEditPerson(String commandArgs) {
+    	final String[] splitArgs = commandArgs.trim().split("\\s+");
+    	if (isEditCommandExtractable(splitArgs) && isPersonIndexCorrect(splitArgs[0])) {
+    		String rawInput = splitArgs[1];
+    		int typeOfFieldToBeEdited = getEditFieldType(rawInput);
+    		String newValue = rawInput.substring(rawInput.indexOf('/') + 1, rawInput.length());
+    		if (isEditFieldCorrect(typeOfFieldToBeEdited, newValue)) {
+    			String[] personToBeEdited = getPersonFromIndex(Integer.parseInt(splitArgs[0]));
+    			personToBeEdited[typeOfFieldToBeEdited] = newValue;
+    			return getMessageForSuccessfulEditPerson();
+    		} else {
+    			return getMessageForInvalidCommandInput(COMMAND_EDIT_WORD, getUsageInfoForEditCommand()); 
+    		} 
+    	} else {
+    		return getMessageForInvalidCommandInput(COMMAND_EDIT_WORD, getUsageInfoForEditCommand()); 
+    	}
+	}
+    
+    private static String[] getPersonFromIndex(int index) {
+    	return ALL_PERSONS.get(index - DISPLAYED_INDEX_OFFSET);
+    }
+    
+    private static boolean isPersonIndexCorrect(String personIndex) {
+    	boolean isPersonIndexCorrect = false;
+    	if (!personIndex.matches("\\d+")) {
+    		return false;
+    	} 
+    	int indexInAllPersons = Integer.parseInt(personIndex) - DISPLAYED_INDEX_OFFSET;
+    	if (indexInAllPersons >= 0 && indexInAllPersons <= ALL_PERSONS.size()) {
+    		isPersonIndexCorrect = true;
+    	}
+    	return isPersonIndexCorrect;
+    }
+    
+    private static boolean isEditCommandExtractable(String[] splitArgs) {
+        return splitArgs.length == 2
+        		&& !splitArgs[0].isEmpty()
+        		&& !splitArgs[1].isEmpty();
+    }
+    
+    private static int getEditFieldType (String rawString) {
+    	if (rawString.startsWith(PERSON_DATA_PREFIX_BIRTHDAY)) {
+    		return PERSON_DATA_INDEX_BIRTHDAY;
+    	} else if (rawString.startsWith(PERSON_DATA_PREFIX_EMAIL)) {
+    		return PERSON_DATA_INDEX_EMAIL;
+    	} else if (rawString.startsWith(PERSON_DATA_PREFIX_PHONE)) {
+    		return PERSON_DATA_INDEX_PHONE;
+    	} else {
+    		return -1;
+    	}
+    }
+    
+    private static boolean isEditFieldCorrect(int type, String value) {
+    	switch (type) {
+		case PERSON_DATA_INDEX_BIRTHDAY:
+			return isPersonBirthdayValid(value);
+		case PERSON_DATA_INDEX_EMAIL:
+			return isPersonEmailValid(value);
+		case PERSON_DATA_INDEX_PHONE:
+			return isPersonPhoneValid(value);
+		default:
+			return false;
+		}
+    }
+
+    private static String getMessageForSuccessfulEditPerson() {
+    	return "Successfully updated!";
+    }
+    
+	private static String executeSortPerson() {
     	ArrayList<String[]> toBeDisplayed = getAllPersonsInAddressBook();
     	toBeDisplayed.sort(new Comparator<String[]>() {
     		
@@ -1186,12 +1264,19 @@ public class AddressBook {
                 + getUsageInfoForFindCommand() + LS
                 + getUsageInfoForViewCommand() + LS
                 + getUsageInfoForSortCommand() + LS
+                + getUsageInfoForEditCommand() + LS
                 + getUsageInfoForDeleteCommand() + LS
                 + getUsageInfoForClearCommand() + LS
                 + getUsageInfoForExitCommand() + LS
                 + getUsageInfoForHelpCommand();
     }
 
+    private static String getUsageInfoForEditCommand() {
+    	return String.format(MESSAGE_COMMAND_HELP, COMMAND_EDIT_WORD, COMMAND_EDIT_DESC) + LS
+    			+ String.format(MESSAGE_COMMAND_HELP_PARAMETERS, COMMAND_EDIT_PARAMETERS) + LS
+                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_EDIT_EXAMPLE) + LS;
+	}
+    
     private static String getUsageInfoForSortCommand() {
     	return String.format(MESSAGE_COMMAND_HELP, COMMAND_SORT_WORD, COMMAND_SORT_DESC) + LS
                 + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_SORT_EXAMPLE) + LS;

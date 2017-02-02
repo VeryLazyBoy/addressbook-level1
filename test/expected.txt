@@ -65,6 +65,10 @@
 || sort: List the persons in alphabetical order
 || 	Example: sort
 || 
+|| edit: Edit one property of a specific person at one time.
+|| 	Parameters: INDEX p/PHONE_NUMBER e/EMAIL b/BIRTHDAY
+|| 	Example: edit 1 p/4008823823
+|| 
 || delete: Deletes a person identified by the index number used in the last find/list call.
 || 	Parameters: INDEX
 || 	Example: delete 1
@@ -182,6 +186,21 @@
 || 	5. Esther Potato  Phone Number: 555555  Email: esther@notreal.potato  Birthday: 20170202
 || 
 || 5 persons found!
+|| ===================================================
+|| Enter command: || [Command entered:  edit 1 p/4008823823]
+|| Successfully updated!
+|| ===================================================
+|| Enter command: || [Command entered:  list]
+|| 	1. Adam Brown  Phone Number: 4008823823  Email: adam@gmail.com  Birthday: 20170202
+|| 	2. Betsy Choo  Phone Number: 222222  Email: benchoo@nus.edu.sg  Birthday: 20170202
+|| 	3. Charlie Dickson  Phone Number: 333333  Email: charlie.d@nus.edu.sg  Birthday: 20170202
+|| 	4. Dickson Ee  Phone Number: 444444  Email: dickson@nus.edu.sg  Birthday: 20170202
+|| 	5. Esther Potato  Phone Number: 555555  Email: esther@notreal.potato  Birthday: 20170202
+|| 
+|| 5 persons found!
+|| ===================================================
+|| Enter command: || [Command entered:  edit 1 p/111111]
+|| Successfully updated!
 || ===================================================
 || Enter command: || [Command entered:  find]
 || 

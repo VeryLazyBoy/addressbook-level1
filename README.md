@@ -85,6 +85,12 @@ Format: `list`
 
 Format: `sort` 
 
+#### Editing a field of a person at one time
+
+> Edit a field of a person at one time.
+
+Format: `edit INDEX p/PHONE_NUMBER e/EMAIL b/BIRTHDAY` 
+
 #### Finding a person by keyword `find`
 > Finds persons that match given keywords
 
