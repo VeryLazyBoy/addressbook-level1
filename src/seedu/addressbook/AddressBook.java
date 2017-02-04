@@ -1145,15 +1145,15 @@ public class AddressBook {
      */
 
     /**
-     * Removes sign(p/, d/, etc) from parameter string
+     * Removes prefix(p/, d/, etc) from parameter string
      *
-     * @param s  Parameter as a string
-     * @param sign  Parameter sign to be removed
-     * @return  string without the sign
+     * @param personData  Parameter as a string
+     * @param prefix  Parameter prefix to be removed
+     * @return  string without the prefix
      */
-    private static String removePrefix(String s, String prefix) {
+    private static String removePrefix(String personData, String prefix) {
         int indexOfDataWithoutPrefix = prefix.length();
-        return s.substring(indexOfDataWithoutPrefix);
+        return personData.substring(indexOfDataWithoutPrefix);
     }
 
     /**
