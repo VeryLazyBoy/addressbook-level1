@@ -409,7 +409,13 @@ public class AddressBook {
             return getMessageForInvalidCommandInput(commandType, getUsageInfoForAllCommands());
         }
     }
-
+    
+    /**
+     * Edits one property of a person and save it to the address book.
+     * 
+     * @param commandArgs full command args string from the user
+     * @return feedback display message for the operation result
+     */
     private static String executeEditPerson(String commandArgs) {
         final String[] splitArgs = commandArgs.trim().split("\\s+");
         if (isEditCommandExtractable(splitArgs) && isPersonIndexCorrect(splitArgs[0])) {
@@ -432,6 +438,9 @@ public class AddressBook {
         return ALL_PERSONS.get(index - DISPLAYED_INDEX_OFFSET);
     }
     
+    /**
+     * a personIndex given by the user is correct if it is within the bound of All_Persons
+     */
     private static boolean isPersonIndexCorrect(String personIndex) {
         boolean isPersonIndexCorrect = false;
         if (!personIndex.matches("\\d+")) {
@@ -444,6 +453,12 @@ public class AddressBook {
         return isPersonIndexCorrect;
     }
     
+    /**
+     * Returns true if person data (email, name, phone etc) can be extracted from the argument string.
+     * Format is [index] p/[phone] or e/[email] or b/[birthday]
+     *
+     * @param splitArgs as split in {@link #executeEditPerson}
+     */
     private static boolean isEditCommandExtractable(String[] splitArgs) {
         return splitArgs.length == 2
                 && !splitArgs[0].isEmpty()
@@ -479,6 +494,10 @@ public class AddressBook {
         return "Successfully updated!";
     }
     
+    /**
+     * Sorts persons in alphabetical order.
+     * @return feedback display message for the operation result.
+     */
     private static String executeSortPerson() {
         ArrayList<String[]> toBeDisplayed = getAllPersonsInAddressBook();
         toBeDisplayed.sort(new Comparator<String[]>() {
@@ -1074,7 +1093,7 @@ public class AddressBook {
 
     /**
      * Returns true if person data (email, name, phone etc) can be extracted from the argument string.
-     * Format is [name] p/[phone] e/[email], b\[birthday] phone' s, birthday's and email's positions can be in any order.
+     * Format is [name] p/[phone] e/[email], b/[birthday] phone' s, birthday's and email's positions can be in any order.
      *
      * @param personData person string representation
      */
